@@ -1,6 +1,6 @@
 # grunt-dancer
 
-> Control your dancer server via Grunt
+> Control your Perl Dancer server via Grunt
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1` 
