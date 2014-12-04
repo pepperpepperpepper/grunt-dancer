@@ -22,13 +22,13 @@ grunt.loadNpmTasks('grunt-dancer');
 ### Overview
 The dancer:serve task can run without configuration by default
 
-####Dancer:serve
+####dancer:serve
 Launches the server and whenever the the parent process ends, it terminates the server.
 
-####Dancer:start
+####dancer:start
 Launches the server and leaves it running even when the parent process is no longer running.
 
-####Dancer:kill
+####dancer:kill
 Terminates an already running server.
 
 ###Options
