@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         dancer.start(args, opts);
         break;
       case 'restart':
-        if(_currentProcess) {
+        if(typeof(_currentProcess) !== 'undefined') {
 
           _currentProcess.on('close', function() {
             _currentProcess = spawn(args, {
@@ -34,17 +34,14 @@ module.exports = function(grunt) {
 
           _currentProcess.kill('SIGQUIT');
         } else {
-          if(grunt.file.exists(_pidFile)) {
-            var killArgs = ['-s', 'QUIT', grunt.file.read(_pidFile)];
+          if(grunt.file.exists(opts.pidFile)) {
+            var killArgs = ['-s', 'QUIT', grunt.file.read(opts.pidFile)];
             var killTask = spawn('kill', killArgs, {
-              stdio: 'ignore'
+//              stdio: 'ignore'
             });
 
-            // args.unshift('server');
-            _currentProcess = spawn(args, {
-              stdio: ['ignore', process.stdout, 'ignore']
-            });
           }
+          dancer.start(args, opts);
         }
         break;
       case 'kill':
