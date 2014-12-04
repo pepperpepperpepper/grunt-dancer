@@ -20,7 +20,7 @@ grunt.loadNpmTasks('grunt-dancer');
 ## The "dancer" task
 
 ### Overview
-The dancer:serve task can run without configuration by default, it will run `rackup` on the project root, serving the files on the port 9292.
+The dancer:serve task can run without configuration by default
 
 ####Dancer:serve
 Launches the server and whenever the the parent process ends, it terminates the server.
