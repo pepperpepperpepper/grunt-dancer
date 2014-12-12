@@ -7,8 +7,8 @@ module.exports = function(grunt) {
     jshint: {
       all: [
         'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>',
+        'tasks/*.js'
+//        '<%= mochaTest.src %>',
       ],
       options: {
         jshintrc: '.jshintrc',
@@ -24,25 +24,17 @@ module.exports = function(grunt) {
     dancer: {
       default_options: {
         options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
+          app_path : [ 'test/bin/app.pl' ],
         },
       },
     },
 
     // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js'],
+    mochaTest: {
+      test: {
+        reporter: 'spec',
+      },
+      src: ['test/dancer_spec.js'],
     },
 
   });
@@ -53,11 +45,11 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-mocha-test');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'dancer:start', 'dancer:kill', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'dancer:start', 'dancer:kill', 'mochaTest']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

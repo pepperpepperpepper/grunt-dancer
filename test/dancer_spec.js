@@ -3,21 +3,22 @@ var should = require("should"),
       dancer = require("../lib/dancer");
 
 describe("grunt-dancer", function(){
-  var args = [];
-  var opts = {
-    pidFile: "/tmp/dancerServer.pid"
-  }
+  var options = {
+    pidFile : "/tmp/dancerServer.pid",
+    args : [],
+    app_path : 'test/bin/app.pl', 
+  };
 
   it("should start the server", function(){
     //code here
-    dancer.start(args, opts);
+    dancer.start(options);
     running(dancer.pid()).should.equal(true);
   });
 
   it("should kill the server", function(){
     var pid = dancer.pid();
     running(pid).should.equal(true);
-    dancer.kill(args, opts);
+    dancer.kill(options);
     setTimeout(function(){
       running(pid).should.equal(false);
     }, 500);
