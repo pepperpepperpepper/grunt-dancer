@@ -3,8 +3,6 @@
 > Control your Perl Dancer server via Grunt
 
 ## Getting Started
-This plugin requires Grunt `~0.4.1` 
-
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 <!--npm install grunt-dancer --save-dev -->
@@ -25,9 +23,6 @@ grunt.loadNpmTasks('grunt-dancer');
 
 ### Overview
 The dancer:serve task can run without configuration by default
-
-####dancer:serve
-Launches the server and whenever the the parent process ends, it terminates the server.
 
 ####dancer:start
 Launches the server and leaves it running even when the parent process is no longer running.
