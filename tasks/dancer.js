@@ -18,6 +18,12 @@ module.exports = function(grunt) {
     });
 
     if (command === 'watch'){
+        process.on('SIGINT', function(){
+          dancer.kill(grunt, options, function(){
+            //needs to remove pid
+            process.exit(); 
+          });
+        });
         process._watch = true;
         var done = this.async();
         process.once('exit', done);
