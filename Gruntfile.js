@@ -24,6 +24,7 @@ module.exports = function(grunt) {
     dancer: {
       options: {
         app_path : 'test/bin/app.pl',
+        watch : true,
         args : []
       },
     },
@@ -35,7 +36,7 @@ module.exports = function(grunt) {
         files: [
           'test/bin/app.pl'
         ],
-        tasks: ['dancer:kill','dancer:start']
+        tasks: ['dancer:watch']
       }
     },
 
@@ -63,6 +64,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['clean', 'dancer:start', 'dancer:kill', 'mochaTest']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  
+  grunt.registerTask('default', ['dancer:start', 'watch']);
 
 };

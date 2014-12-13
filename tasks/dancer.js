@@ -1,47 +1,44 @@
 'use strict';
+var fs = require('fs');
 
 module.exports = function(grunt) {
 
   var spawn = require('child_process').spawn,
-      dancer = require('../lib/dancer'),
-      _currentProcess;
+      dancer = require('../lib/dancer');
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
-  var noop = function(){};
+//    {{{ old news
+//    grunt.event.once('test',function(){
+//      process._test = true;
+//    });
+//  grunt.event.once('watch',function(){
+//    process._watch = true;
+//  });
+//  }}}
   grunt.registerTask('dancer', 'Control your dancer server via Grunt', function(command) {
 
-    command = command || 'start';
+//    command = command || 'start';
     //defaults
     var options = this.options({
       pidFile : "/tmp/dancerServer.pid",
       args : [],
       app_path : 'bin/app.pl', 
-      stderr : 'true',
-      stdout : 'true'
+      debug : true,
     });
 
-    grunt.event.once('watch',function(){
-      process._watch = true;
-    });
-
-    options.stderr = options.stderr ? function(s) { grunt.log.error(s.red); } : noop;
-    options.stdout = options.stdout ? function(s) { grunt.log.error(s.red); } : noop;
-    
-    switch(command) {
-      case 'start':
+    if (command === 'watch'){
+        process._watch = true;
         var done = this.async();
-        if(process._watch){
-          grunt.log.writeln("starting from watch".grey);
-        } 
+        dancer.kill(grunt, options, function(){
+          console.log("calling our boy");
+          dancer.start(grunt, options, function(){});
+        });
+    }else if(command === 'start'){    
+        console.log('calling start guys');
+        var done = this.async();
         dancer.start(grunt, options, done);
-        break;
-      case 'kill':
+    }else if (command === 'kill'){
         var done = this.async();
         dancer.kill(grunt, options, done);
-        break;
     }
-
-  });
-
-};
+  })
+}
