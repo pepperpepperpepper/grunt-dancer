@@ -22,11 +22,21 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     dancer: {
-      default_options: {
-        options: {
-          app_path : [ 'test/bin/app.pl' ],
-        },
+      options: {
+        app_path : 'test/bin/app.pl',
+        args : []
       },
+    },
+    watch: {
+      dancer: {
+        options: {
+          spawn : false,
+        },
+        files: [
+          'test/bin/app.pl'
+        ],
+        tasks: ['dancer:kill','dancer:start']
+      }
     },
 
     // Unit tests.
@@ -45,6 +55,7 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-test');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this

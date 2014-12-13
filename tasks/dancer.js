@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
-
+  var noop = function(){};
   grunt.registerTask('dancer', 'Control your dancer server via Grunt', function(command) {
 
     command = command || 'start';
@@ -17,35 +17,28 @@ module.exports = function(grunt) {
       pidFile : "/tmp/dancerServer.pid",
       args : [],
       app_path : 'bin/app.pl', 
+      stderr : 'true',
+      stdout : 'true'
     });
 
+    grunt.event.once('watch',function(){
+      process._watch = true;
+    });
+
+    options.stderr = options.stderr ? function(s) { grunt.log.error(s.red); } : noop;
+    options.stdout = options.stdout ? function(s) { grunt.log.error(s.red); } : noop;
+    
     switch(command) {
       case 'start':
-        dancer.start(options);
-        break;
-      case 'restart':
-        if(typeof(_currentProcess) !== 'undefined') {
-
-          _currentProcess.on('close', function() {
-            _currentProcess = spawn('perl', [options.app_path].concat(options.args), {
-              stdio: 'inherit'
-            });
-          });
-
-          _currentProcess.kill('SIGQUIT');
-        } else {
-          if(grunt.file.exists(options.pidFile)) {
-            var killArgs = ['-s', 'QUIT', grunt.file.read(options.pidFile)];
-            var killTask = spawn('kill', killArgs, {
-//              stdio: 'ignore'
-            });
-
-          }
-          dancer.start(options);
-        }
+        var done = this.async();
+        if(process._watch){
+          grunt.log.writeln("starting from watch".grey);
+        } 
+        dancer.start(grunt, options, done);
         break;
       case 'kill':
-        dancer.kill(options);
+        var done = this.async();
+        dancer.kill(grunt, options, done);
         break;
     }
 
