@@ -6,6 +6,9 @@ module.exports = function(grunt) {
   var spawn = require('child_process').spawn,
       dancer = require('../lib/dancer');
 
+  grunt.event.once('watch',function(){
+    process._dancer_session = true;
+  });
   grunt.registerTask('dancer', 'Control your dancer server via Grunt', function(command) {
 
     command = command || 'start';
@@ -17,21 +20,23 @@ module.exports = function(grunt) {
       debug : false,
     });
 
-    if (command === 'watch'){
-        process.on('SIGINT', function(){
-          dancer.kill(grunt, options, function(){
-            process.exit(); 
+    if (command === 'start'){
+        if( process._dancer_session){
+          process.on('SIGINT', function(){
+            dancer.kill(grunt, options, function(){
+              process.exit(); 
+            });
           });
-        });
-        process._dancer_session = true;
-        var done = this.async();
-        process.once('exit', done);
-        dancer.kill(grunt, options, function(){
-          dancer.start(grunt, options, function(){});
-        });
-    }else if(command === 'start'){    
-        var done = this.async();
-        dancer.start(grunt, options, done);
+          process._dancer_session = true;
+          var done = this.async();
+          process.once('exit', done);
+          dancer.kill(grunt, options, function(){
+            dancer.start(grunt, options, function(){});
+          });
+        }else{
+          var done = this.async();
+          dancer.start(grunt, options, done);
+        }
     }else if (command === 'kill' || command === 'exit' || command == 'stop'){
         var done = this.async();
         dancer.kill(grunt, options, done);

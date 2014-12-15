@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         files: [
           'test/bin/app.pl'
         ],
-        tasks: ['dancer:watch']
+        tasks: ['dancer']
       }
     },
 
@@ -61,10 +61,10 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'dancer:start', 'dancer:kill', 'mochaTest']);
+  grunt.registerTask('test', ['clean', 'dancer', 'dancer:kill', 'mochaTest']);
 
   // By default, lint and run all tests.
   
-  grunt.registerTask('default', ['dancer:start', 'watch']);
+  grunt.registerTask('default', ['dancer', 'watch']);
 
 };

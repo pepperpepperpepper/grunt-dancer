@@ -5,7 +5,6 @@
 ## Getting Started
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
-<!--npm install grunt-dancer --save-dev -->
 In the shell...
 ```shell
 npm install grunt-dancer
@@ -25,9 +24,6 @@ Launches the server and leaves it running even when the parent process is no lon
 
 ####dancer:kill
 Terminates an already running server.
-
-####dancer:watch
-A special configuration of dancer:start to work with grunt-contrib-watch
 
 ###Options
 pidFile
@@ -51,20 +47,14 @@ Any additional arguments to add to the dancer command can be supplied as an arra
 
 
 ### Getting Started
-In your project's Gruntfile, add `dancer:serve` to the taskList object passed into `grunt.registerTask`.
+In your project's Gruntfile, add `dancer` to the taskList object passed into `grunt.registerTask`.
+ie:
 
 ```js
 	grunt.registerTask('local', [
 		'concat',
 		'uglify',
-		'sass',
-		'autoprefixer',
-		'cssmin',
-		'assemble',
-		'imagemin',
-		'copy',
 		'dancer',
-		'open:chromium',
 		'watch'
 	]);
 ```
@@ -81,10 +71,9 @@ $ make tests
 
 ##With grunt-contrib-watch:
 
-You can use this plugin with watch, but instead of using the dancer:start and dancer:kill tasks, you have
-to use dancer:watch. Here's an example of my watch config:
+You can use this plugin with watch. Here's an example of my watch config:
 
-   
+```   
     watch: {
       dancer: {
         options: {
@@ -93,14 +82,12 @@ to use dancer:watch. Here's an example of my watch config:
         files: [
           'test/bin/app.pl'
         ],
-        tasks: ['dancer:watch'] //IMPORTANT. here you must specify dancer:watch
+        tasks: ['dancer'] 
       }
     },
  
 //...
-  grunt.registerTask('default', ['dancer:start', 'watch']);
+  grunt.registerTask('default', ['dancer', 'watch']);
+```
+The dancer task knows if watch is running, and on interrupt will kill the dancer server along with it.
 
-## Special thanks to 
-https://github.com/vjustov for grunt-sinatra
-## Release History
-_(Nothing yet)_
