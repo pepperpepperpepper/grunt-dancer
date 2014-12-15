@@ -9,22 +9,23 @@ describe("grunt-dancer", function(){
     app_path : 'test/bin/app.pl', 
   };
 
-  it("should start the server", function(){
-    //code here
-    dancer.start(options);
-    running(dancer.pid()).should.equal(true);
-  });
-
-  it("should kill the server", function(){
-    var pid = dancer.pid();
-    running(pid).should.equal(true);
-    dancer.kill(options);
-    setTimeout(function(){
-      running(pid).should.equal(false);
-    }, 500);
-  });
-
-  it("should restart a running server");
-  it("should kill the server when the task finishes");
+//  need new tests
+//  it("should start the server", function(){
+//    //code here
+//    dancer.start(options);
+//    running(dancer.pid()).should.equal(true);
+//  });
+//
+//  it("should kill the server", function(){
+//    var pid = dancer.pid();
+//    running(pid).should.equal(true);
+//    dancer.kill(options);
+//    setTimeout(function(){
+//      running(pid).should.equal(false);
+//    }, 500);
+//  });
+//
+//  it("should restart a running server");
+//  it("should kill the server when the task finishes");
 
 })

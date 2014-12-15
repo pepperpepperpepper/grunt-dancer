@@ -24,7 +24,7 @@ module.exports = function(grunt) {
     dancer: {
       options: {
         app_path : 'test/bin/app.pl',
-        watch : true,
+        debug : true,
         args : []
       },
     },

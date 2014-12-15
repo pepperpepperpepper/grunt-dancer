@@ -6,11 +6,9 @@
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 <!--npm install grunt-dancer --save-dev -->
-In the shell...(for now...eventually this project will be added to npm)
+In the shell...
 ```shell
-git clone https://github.com/pepperpepperpepper/grunt-dancer.git node-modules
-cd node-modules/grunt-dancer
-npm install
+npm install grunt-dancer
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
@@ -22,13 +20,14 @@ grunt.loadNpmTasks('grunt-dancer');
 ## The "dancer" task
 
 ### Overview
-The dancer:serve task can run without configuration by default
-
-####dancer:start
+####dancer:start (the default dancer task)
 Launches the server and leaves it running even when the parent process is no longer running.
 
 ####dancer:kill
 Terminates an already running server.
+
+####dancer:watch
+A special configuration of dancer:start to work with grunt-contrib-watch
 
 ###Options
 pidFile
@@ -36,7 +35,20 @@ pidFile
 Type: `String`
 Default: `'/tmp/dancerServer.pid'`
 
-Path to the pid file in case you wanna run the server by itself.
+Path to the pid file in case you want to run the server by itself.
+
+debug
+Type: `boolean`
+Default: `false`
+
+Extra logging output.
+
+args
+Type: `array`
+Default: []
+
+Any additional arguments to add to the dancer command can be supplied as an array of strings.
+
 
 ### Getting Started
 In your project's Gruntfile, add `dancer:serve` to the taskList object passed into `grunt.registerTask`.
@@ -51,7 +63,7 @@ In your project's Gruntfile, add `dancer:serve` to the taskList object passed in
 		'assemble',
 		'imagemin',
 		'copy',
-		'dancer:serve',
+		'dancer',
 		'open:chromium',
 		'watch'
 	]);
@@ -67,8 +79,26 @@ Then run the tests:
 $ make tests
 ```
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+##With grunt-contrib-watch:
+
+You can use this plugin with watch, but instead of using the dancer:start and dancer:kill tasks, you have
+to use dancer:watch. Here's an example of my watch config:
+
+   
+    watch: {
+      dancer: {
+        options: {
+          spawn : false, // IMPORTANT. will not work without this setting.
+        },
+        files: [
+          'test/bin/app.pl'
+        ],
+        tasks: ['dancer:watch'] //IMPORTANT. here you must specify dancer:watch
+      }
+    },
+ 
+//...
+  grunt.registerTask('default', ['dancer:start', 'watch']);
 
 ## Special thanks to 
 https://github.com/vjustov for grunt-sinatra

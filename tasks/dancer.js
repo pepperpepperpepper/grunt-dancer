@@ -8,23 +8,22 @@ module.exports = function(grunt) {
 
   grunt.registerTask('dancer', 'Control your dancer server via Grunt', function(command) {
 
-//    command = command || 'start';
+    command = command || 'start';
     //defaults
     var options = this.options({
       pidFile : "/tmp/dancerServer.pid",
       args : [],
       app_path : 'bin/app.pl', 
-      debug : true,
+      debug : false,
     });
 
     if (command === 'watch'){
         process.on('SIGINT', function(){
           dancer.kill(grunt, options, function(){
-            //needs to remove pid
             process.exit(); 
           });
         });
-        process._watch = true;
+        process._dancer_session = true;
         var done = this.async();
         process.once('exit', done);
         dancer.kill(grunt, options, function(){
@@ -33,7 +32,7 @@ module.exports = function(grunt) {
     }else if(command === 'start'){    
         var done = this.async();
         dancer.start(grunt, options, done);
-    }else if (command === 'kill' || command === 'exit'){
+    }else if (command === 'kill' || command === 'exit' || command == 'stop'){
         var done = this.async();
         dancer.kill(grunt, options, done);
     }
