@@ -71,7 +71,7 @@ $ make tests
 
 ##With grunt-contrib-watch:
 
-You can use this plugin with watch. Here's an example of my watch config:
+You can use this plugin with watch. This is awesome because it enables the server to live reload when you make changes to server files (or any files that you specify). Here's an example of my watch config:
 
 ```   
     watch: {
