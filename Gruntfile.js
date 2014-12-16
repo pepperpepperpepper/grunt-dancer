@@ -59,11 +59,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-test');
 
-  // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-  // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'dancer', 'dancer:kill', 'mochaTest']);
-
   // By default, lint and run all tests.
+  grunt.registerTask('test-watch', ['dancer', 'watch']);
   
   grunt.registerTask('default', ['dancer', 'watch']);
 
