@@ -22,11 +22,6 @@ module.exports = function(grunt) {
 
     if (command === 'start'){
         if( process._dancer_session){
-          process.on('SIGINT', function(){
-            dancer.kill(grunt, options, function(){
-              process.exit(); 
-            });
-          });
           process._dancer_session = true;
           var done = this.async();
           process.once('exit', done);
