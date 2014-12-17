@@ -8,7 +8,7 @@ var options = {//these match the Gruntfile
   debug : false,
   pidFile : "/tmp/dancerServer.pid", 
   args : [],
-  app_path : 'bin/app.pl', 
+  app_path : 'test/bin/app.pl', 
 };
 var pid, grunt_watch_pid;
 describe("start dancer server", function(){
@@ -16,7 +16,7 @@ describe("start dancer server", function(){
   before(function(done){
     async.waterfall([
         function start_dancer(start_callback){
-          child_process.exec('grunt dancer', { 'cwd' : '../' }, function(err, stdout, stderr){
+          child_process.exec('grunt dancer', { 'cwd' : './' }, function(err, stdout, stderr){
             start_callback(err, stdout, stderr);
           });
         },
@@ -53,7 +53,7 @@ describe("kill dancer server", function(){
   before(function(done){
     async.waterfall([
         function kill_dancer(kill_callback){
-          child_process.exec('grunt dancer:kill', { 'cwd' : '../' }, function(err, stdout, stderr){
+          child_process.exec('grunt dancer:kill', { 'cwd' : './' }, function(err, stdout, stderr){
             kill_callback(err, stdout, stderr);
           });
         },
@@ -109,11 +109,10 @@ describe("kill dancer server", function(){
    }); 
 });
 
-//ALMOST WORKING...FIX ME
 describe("start dancer with grunt watch", function(){
   this.timeout(6000);
   before(function(done){
-        var myproc = child_process.exec('grunt test-watch', { 'cwd' : '../', stdio: 'pipe', detached: true }, function(err, stdout, stderr){
+        var myproc = child_process.exec('grunt test-watch', { 'cwd' : './', stdio: 'pipe', detached: true }, function(err, stdout, stderr){
           if (options.debug) console.log(err);
         });
         grunt_watch_pid = myproc.pid;

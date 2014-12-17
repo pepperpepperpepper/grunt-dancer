@@ -40,14 +40,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // Unit tests.
-    mochaTest: {
-      test: {
-        reporter: 'spec',
-      },
-      src: ['test/dancer_spec.js'],
-    },
-
   });
 
   // Actually load this plugin's task(s).
@@ -59,7 +51,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-test');
 
-  // By default, lint and run all tests.
   grunt.registerTask('test-watch', ['dancer', 'watch']);
   
   grunt.registerTask('default', ['dancer', 'watch']);

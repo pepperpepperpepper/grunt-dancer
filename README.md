@@ -66,7 +66,7 @@ $ npm install
 ```
 Then run the tests:
 ```shell
-$ make tests
+$ mocha test/test.js 
 ```
 
 ##With grunt-contrib-watch:
