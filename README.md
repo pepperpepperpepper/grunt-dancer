@@ -66,7 +66,7 @@ You can use this plugin with watch. This is awesome because it enables you to li
           spawn : false, // IMPORTANT. will not work without this setting.
         },
         files: [
-          '/bin/hi.rb'
+          '/bin/app.pl'
         ],
         tasks: ['dancer'] 
       }
