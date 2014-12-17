@@ -1,20 +1,7 @@
 # grunt-dancer
 
-> Control your Perl Dancer server via Grunt
+> Use grunt to control your Perl Dancer's development server, and live-reload with grunt-contrib-watch! 
 
-## Getting Started
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
-
-In the shell...
-```shell
-npm install grunt-dancer
-```
-
-Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
-
-```js
-grunt.loadNpmTasks('grunt-dancer');
-```
 
 ## The "dancer" task
 
@@ -22,36 +9,35 @@ grunt.loadNpmTasks('grunt-dancer');
 ####dancer:start (the default dancer task)
 Launches the server and leaves it running even when the parent process is no longer running.
 
-####dancer:kill
+####dancer:stop --or-- dancer:kill
 Terminates an already running server.
 
 ###Options
-pidFile
+The `dancer` task should be configured with the following options:
 
-Type: `String`
-Default: `'/tmp/dancerServer.pid'`
+| Name | Type | Default  | Description                                               |
+| -----| ---- | -------- | ----------------------------------------------------------|
+| pidFile | `string` | `'/tmp/dancerServer.pid'` | Path to the pid file. (REQUIRED) |
+| debug | `boolean` | `false` | Extra logging output (OPTIONAL)                      |
+| args | `array` | `[]` | Additional arguments to add to the dancer command, supplied as an array of strings. (OPTIONAL) |
 
-Path to the pid file in case you want to run the server by itself.
-
-debug
-Type: `boolean`
-Default: `false`
-
-Extra logging output.
-
-args
-Type: `array`
-Default: []
-
-Any additional arguments to add to the dancer command can be supplied as an array of strings.
 
 
 ### Getting Started
-In your project's Gruntfile, add `dancer` to the taskList object passed into `grunt.registerTask`.
-ie:
+In the shell...
+```shell
+npm install grunt-dancer
+```
+
+Load it by adding this to Gruntfile.js:
 
 ```js
-	grunt.registerTask('local', [
+grunt.loadNpmTasks('grunt-dancer');
+```
+Then add `dancer` to the taskList object passed into `grunt.registerTask` in Gruntfile.js.
+(example:)
+```js
+	grunt.registerTask('default', [
 		'concat',
 		'uglify',
 		'dancer',
@@ -66,12 +52,12 @@ $ npm install
 ```
 Then run the tests:
 ```shell
-$ mocha test/test.js 
+$ mocha test/test.js
 ```
 
 ##With grunt-contrib-watch:
 
-You can use this plugin with watch. This is awesome because it enables you to live reload the dancer server when you make changes to server files (or really, any files that you specify). Here's an example of my watch config:
+You can use this plugin with watch. This is awesome because it enables you to live-reload the dancer server when you make changes to server files (or really, any files that you specify). Here's an example of my watch config:
 
 ```   
     watch: {
@@ -80,7 +66,7 @@ You can use this plugin with watch. This is awesome because it enables you to li
           spawn : false, // IMPORTANT. will not work without this setting.
         },
         files: [
-          'test/bin/app.pl'
+          '/bin/hi.rb'
         ],
         tasks: ['dancer'] 
       }

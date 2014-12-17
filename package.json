@@ -1,7 +1,7 @@
 {
   "name": "grunt-dancer",
-  "description": "Control your Perl Dancer server via Grunt",
-  "version": "0.0.1",
+  "description": "Use grunt to control Perl's Dancer server, and live-reload with grunt-contrib-watch",
+  "version": "0.1.1",
   "homepage": "https://github.com/pepperpepperpepper/grunt-dancer",
   "author": {
     "name": "Pepper",
